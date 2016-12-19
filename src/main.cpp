@@ -45,10 +45,10 @@ void TestGame::Init(const Window& window)
 int main()
 {
 	TestGame game;
-	Window window(800, 600, "3D Game Engine");
+	Window window(1366, 768, "3D Game Engine");
 	RenderingEngine renderer(window);
 	
-	//window.SetFullScreen(true);
+	window.SetFullScreen(true);
 	
 	CoreEngine engine(60, &window, &renderer, &game);
 	engine.Start();
