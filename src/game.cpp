@@ -58,7 +58,7 @@ void Game::LoadMap(const std::string& mapName) {
 
 		iss = std::istringstream(line);
 		std::string command;
-		iss >> command;
+		if (!(iss >> command)) continue;  // Ignores newlines
 
 		if (command == "E")	// Declaration of an entity
 		{
