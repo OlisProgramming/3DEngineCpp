@@ -33,6 +33,16 @@ public:
 		shader.UpdateUniforms(GetTransform(), m_material, renderingEngine, camera);
 		m_mesh.Draw();
 	}
+
+	std::string ToString() const
+	{
+		std::string out = "MeshRenderer { ";
+		out += m_mesh.GetFname();
+		out += ", Material ";
+		out += m_material.ToString();
+		out += " }";
+		return out;
+	}
 protected:
 private:
 	Mesh m_mesh;

@@ -46,6 +46,8 @@ public:
 	
 	inline Transform* GetTransform() { return &m_transform; }
 	void SetEngine(CoreEngine* engine);
+
+	std::string ToString() const;
 protected:
 private:
 	std::vector<Entity*>          m_children;

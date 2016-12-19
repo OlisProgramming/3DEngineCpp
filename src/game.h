@@ -38,6 +38,7 @@ public:
 	inline void SetEngine(CoreEngine* engine) { m_root.SetEngine(engine); }
 protected:
 	void AddToScene(Entity* child) { m_root.AddChild(child); }
+	void LoadMap(const std::string& mapName);
 private:
 	Game(Game& game) {}
 	void operator=(Game& game) {}

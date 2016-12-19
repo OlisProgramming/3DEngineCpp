@@ -80,6 +80,7 @@ public:
 	inline const float GetIntensity()        const { return m_intensity; }
 	inline const Shader& GetShader()         const { return m_shader; }
 	inline const ShadowInfo& GetShadowInfo() const { return m_shadowInfo; }
+
 protected:
 	inline void SetShadowInfo(const ShadowInfo& shadowInfo) { m_shadowInfo = shadowInfo; }
 private:
@@ -98,6 +99,18 @@ public:
 	virtual ShadowCameraTransform CalcShadowCameraTransform(const Vector3f& mainCameraPos, const Quaternion& mainCameraRot) const;
 	
 	inline float GetHalfShadowArea() const { return m_halfShadowArea; }
+
+	virtual std::string ToString() const
+	{
+		std::string out = "DirectionalLight { Color (";
+		out += std::to_string(GetColor().GetX()) + ", ";
+		out += std::to_string(GetColor().GetY()) + ", ";
+		out += std::to_string(GetColor().GetZ());
+		out += "), Intensity " + std::to_string(GetIntensity());
+		out += " }";
+		return out;
+	}
+
 private:
 	float m_halfShadowArea;
 };

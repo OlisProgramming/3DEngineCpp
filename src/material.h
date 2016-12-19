@@ -46,6 +46,8 @@ public:
 	inline const Vector3f& GetVector3f(const std::string& name) const { return m_materialData->GetVector3f(name); }
 	inline float GetFloat(const std::string& name)              const { return m_materialData->GetFloat(name); }
 	inline const Texture& GetTexture(const std::string& name)   const { return m_materialData->GetTexture(name); }
+
+	std::string ToString() const { return m_materialName; }
 protected:
 private:
 	static std::map<std::string, MaterialData*> s_resourceMap;

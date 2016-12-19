@@ -263,7 +263,7 @@ Mesh::Mesh(const std::string& fileName) :
 		if(!scene)
 		{
 			std::cout << "Mesh load failed!: " << fileName << std::endl;
-			assert(0 == 0);
+			assert(0 != 0);
 		}
 		
 		const aiMesh* model = scene->mMeshes[0];

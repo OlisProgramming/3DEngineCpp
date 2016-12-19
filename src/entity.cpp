@@ -139,3 +139,29 @@ std::vector<Entity*> Entity::GetAllAttached()
 	result.push_back(this);
 	return result;
 }
+
+std::string Entity::ToString() const {
+	
+	std::string out;
+	out = "Entity {\n\tPos = ("
+		+ std::to_string(m_transform.GetPos().GetX()) + ", "
+		+ std::to_string(m_transform.GetPos().GetY()) + ", "
+		+ std::to_string(m_transform.GetPos().GetZ())
+		+ ")\n\tRot = ("
+		+ std::to_string(m_transform.GetRot().GetX()) + ", "
+		+ std::to_string(m_transform.GetRot().GetY()) + ", "
+		+ std::to_string(m_transform.GetRot().GetZ()) + ", "
+		+ std::to_string(m_transform.GetRot().GetW())
+		+ ")\n\tScl = ("
+		+ std::to_string(m_transform.GetScale())
+		+ ")\n";
+
+	for (EntityComponent* comp : m_components)
+	{
+		out += "\t" + comp->ToString() + "\n";
+	}
+
+	out += "}";
+
+	return out;
+}

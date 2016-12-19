@@ -65,6 +65,11 @@ public:
 	
 	inline void SetProjection(const Matrix4f& projection) { m_camera.SetProjection(projection); }
 	virtual void SetParent(Entity* parent);
+
+	std::string ToString() const
+	{
+		return "CameraComponent { }";
+	}
 protected:
 private:
 	Camera m_camera; //The camera that's being used like a component.

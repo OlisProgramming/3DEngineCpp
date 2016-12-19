@@ -16,7 +16,11 @@
 
 #include "game.h"
 #include "renderingEngine.h"
+#include "meshRenderer.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <queue>
 
 void Game::ProcessInput(const Input& input, float delta)
 {
@@ -35,4 +39,57 @@ void Game::Update(float delta)
 void Game::Render(RenderingEngine* renderingEngine)
 {
 	renderingEngine->Render(m_root);
+}
+
+void Game::LoadMap(const std::string& mapName) {
+	
+	std::ifstream infile("./res/maps/" + mapName);
+	std::string line;
+	std::istringstream iss;
+	std::queue<Entity*> currentEntities;
+
+	float x, y, z, qx, qy, qz, qr, s;
+	std::string meshStr, materialStr;
+
+	while (std::getline(infile, line))
+	{
+		Entity* entNewest;
+		if (currentEntities.size() == 0)
+			entNewest = nullptr;
+		else
+			entNewest = currentEntities.back();
+
+		std::cout << line << std::endl;
+
+		unsigned int len = line.length();
+		if (len > 2) iss = std::istringstream(line.substr(2, line.length() - 2));
+		switch (line[0])
+		{
+		case 'E':	// Declaration of an entity
+			if (!(iss >> x >> y >> z >> qx >> qy >> qz >> qr >> s))
+			{
+				std::cout << "Invalid line: " << line << std::endl;
+				return;
+			}
+			currentEntities.push(new Entity(Vector3f(x, y, z), Quaternion(Vector3f(qx, qy, qz), ToRadians(qr)), s));
+			break;
+		case 'e':	// Finalisation of an entity
+			if (currentEntities.size() == 1) {
+				AddToScene(entNewest);
+				std::cout << entNewest->ToString();
+				currentEntities.pop();
+			}
+			break;
+		case 'M':	// MeshRenderer component
+			if (!(iss >> meshStr >> materialStr))
+			{
+				std::cout << "Invalid line: " << line << std::endl;
+				return;
+			}
+			entNewest->AddComponent(new MeshRenderer(Mesh(meshStr), Material(materialStr)));
+			break;
+		default:
+			break;
+		}
+	}
 }

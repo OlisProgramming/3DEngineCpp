@@ -31,6 +31,11 @@ public:
 		m_rightKey(rightKey) {}
 	
 	virtual void ProcessInput(const Input& input, float delta);
+
+	std::string ToString() const
+	{
+		return "FreeMove { }";
+	}
 protected:
 private:
 	void Move(const Vector3f& direction, float amt);

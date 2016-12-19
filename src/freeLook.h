@@ -30,6 +30,11 @@ public:
 		m_windowCenter(windowCenter) {}
 	
 	virtual void ProcessInput(const Input& input, float delta);
+
+	std::string ToString() const
+	{
+		return "FreeLook { }";
+	}
 protected:
 private:
 	float    m_sensitivity;

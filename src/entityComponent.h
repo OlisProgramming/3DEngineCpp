@@ -40,6 +40,8 @@ public:
 	inline const Transform& GetTransform() const { return *m_parent->GetTransform(); }
 	
 	virtual void SetParent(Entity* parent) { m_parent = parent; }
+	virtual Entity* GetParent() const { return m_parent; }
+	virtual std::string ToString() const = 0;
 private:
 	Entity* m_parent;
 	

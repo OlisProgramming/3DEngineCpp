@@ -107,6 +107,7 @@ public:
 	virtual ~Mesh();
 
 	void Draw() const;
+	std::string GetFname() const { return m_fileName; }
 protected:
 private:
 	static std::map<std::string, MeshData*> s_resourceMap;
