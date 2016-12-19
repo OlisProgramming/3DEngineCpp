@@ -208,3 +208,18 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+build/3DEngineCpp.VC.db
+*.obj
+build/CMakeFiles/
+*.tlog
+build/3DEngineCpp.VC.VC.opendb
+build/3DEngineCpp.sln
+build/3DEngineCpp.vcxproj
+build/3DEngineCpp.vcxproj.filters
+build/ALL_BUILD.vcxproj
+build/ALL_BUILD.vcxproj.filters
+build/CMakeCache.txt
+build/Debug/3DEngineCpp.exe
+build/ZERO_CHECK.vcxproj
+build/ZERO_CHECK.vcxproj.filters
+build/cmake_install.cmake
