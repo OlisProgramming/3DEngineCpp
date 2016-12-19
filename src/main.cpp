@@ -35,12 +35,6 @@ void TestGame::Init(const Window& window)
 	Material bricks("bricks", Texture("bricks.jpg"), 0.0f, 0, Texture("bricks_normal.jpg"), Texture("bricks_disp.png"), 0.03f, -0.5f);
 	
 	LoadMap("test.temap");
-
-	//AddToScene((new Entity(Vector3f(0, -1, 5), Quaternion(), 32.0f))
-		//->AddComponent(new MeshRenderer(Mesh("terrain02.obj"), Material("bricks"))));
-	
-	AddToScene((new Entity(Vector3f(), Quaternion(Vector3f(1,0,0), ToRadians(-45))))
-		->AddComponent(new DirectionalLight(Vector3f(1,1,1), 0.4f, 10, 80.0f, 1.0f)));
 	
 	AddToScene((new Entity(Vector3f(0, 2, 0), Quaternion(Vector3f(0,1,0), 0.4f), 1.0f))
 		->AddComponent(new CameraComponent(Matrix4f().InitPerspective(ToRadians(70.0f), window.GetAspect(), 0.1f, 1000.0f)))

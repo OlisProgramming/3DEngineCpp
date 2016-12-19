@@ -48,9 +48,6 @@ void Game::LoadMap(const std::string& mapName) {
 	std::istringstream iss;
 	std::queue<Entity*> currentEntities;
 
-	float x, y, z, qx, qy, qz, qr, s;
-	std::string meshStr, materialStr;
-
 	while (std::getline(infile, line))
 	{
 		Entity* entNewest;
@@ -59,37 +56,47 @@ void Game::LoadMap(const std::string& mapName) {
 		else
 			entNewest = currentEntities.back();
 
-		std::cout << line << std::endl;
+		iss = std::istringstream(line);
+		std::string command;
+		iss >> command;
 
-		unsigned int len = line.length();
-		if (len > 2) iss = std::istringstream(line.substr(2, line.length() - 2));
-		switch (line[0])
+		if (command == "E")	// Declaration of an entity
 		{
-		case 'E':	// Declaration of an entity
+			float x, y, z, qx, qy, qz, qr, s;
 			if (!(iss >> x >> y >> z >> qx >> qy >> qz >> qr >> s))
 			{
-				std::cout << "Invalid line: " << line << std::endl;
+				std::cout << "Invalid map line: " << line << std::endl;
 				return;
 			}
 			currentEntities.push(new Entity(Vector3f(x, y, z), Quaternion(Vector3f(qx, qy, qz), ToRadians(qr)), s));
-			break;
-		case 'e':	// Finalisation of an entity
+		}
+		else if (command == "e")	// Finalisation of an entity
+		{
 			if (currentEntities.size() == 1) {
 				AddToScene(entNewest);
 				std::cout << entNewest->ToString();
 				currentEntities.pop();
 			}
-			break;
-		case 'M':	// MeshRenderer component
+		}
+		else if (command == "M")	// MeshRenderer component
+		{
+			std::string meshStr, materialStr;
 			if (!(iss >> meshStr >> materialStr))
 			{
-				std::cout << "Invalid line: " << line << std::endl;
+				std::cout << "Invalid map line: " << line << std::endl;
 				return;
 			}
 			entNewest->AddComponent(new MeshRenderer(Mesh(meshStr), Material(materialStr)));
-			break;
-		default:
-			break;
+		}
+		else if (command == "LD")	// Light (Directional) component
+		{
+			float colR, colG, colB, intensity, shadowMapSize, shadowArea, shadowSoft;
+			if (!(iss >> colR >> colG >> colB >> intensity >> shadowMapSize >> shadowArea >> shadowSoft))
+			{
+				std::cout << "Invalid map line: " << line << std::endl;
+				return;
+			}
+			entNewest->AddComponent(new DirectionalLight(Vector3f(colR, colG, colB), intensity, shadowMapSize, shadowArea, shadowSoft));
 		}
 	}
 }
