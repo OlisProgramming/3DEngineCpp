@@ -17,6 +17,8 @@
 #include "game.h"
 #include "renderingEngine.h"
 #include "meshRenderer.h"
+#include "freeLook.h"
+#include "freeMove.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -41,7 +43,7 @@ void Game::Render(RenderingEngine* renderingEngine)
 	renderingEngine->Render(m_root);
 }
 
-void Game::LoadMap(const std::string& mapName) {
+void Game::LoadMap(const std::string& mapName, const Window& wnd) {
 	
 	std::ifstream infile("./res/maps/" + mapName);
 	std::string line;
@@ -97,6 +99,24 @@ void Game::LoadMap(const std::string& mapName) {
 				return;
 			}
 			entNewest->AddComponent(new DirectionalLight(Vector3f(colR, colG, colB), intensity, shadowMapSize, shadowArea, shadowSoft));
+		}
+		else if (command == "C")	// Camera component
+		{
+			float fov, near, far;
+			if (!(iss >> fov >> near >> far))
+			{
+				std::cout << "Invalid map line: " << line << std::endl;
+				return;
+			}
+			entNewest->AddComponent(new CameraComponent(Matrix4f().InitPerspective(ToRadians(70.0f), wnd.GetAspect(), 0.1f, 1000.0f)));
+		}
+		else if (command == "FL")	// Free Look
+		{
+			entNewest->AddComponent(new FreeLook(wnd.GetCenter()));
+		}
+		else if (command == "FM")	// Free Move
+		{
+			entNewest->AddComponent(new FreeMove());
 		}
 	}
 }

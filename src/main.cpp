@@ -34,12 +34,7 @@ void TestGame::Init(const Window& window)
 {
 	Material bricks("bricks", Texture("bricks.jpg"), 0.0f, 0, Texture("bricks_normal.jpg"), Texture("bricks_disp.png"), 0.03f, -0.5f);
 	
-	LoadMap("test.temap");
-	
-	AddToScene((new Entity(Vector3f(0, 2, 0), Quaternion(Vector3f(0,1,0), 0.4f), 1.0f))
-		->AddComponent(new CameraComponent(Matrix4f().InitPerspective(ToRadians(70.0f), window.GetAspect(), 0.1f, 1000.0f)))
-		->AddComponent(new FreeLook(window.GetCenter()))
-		->AddComponent(new FreeMove()));
+	LoadMap("test.temap", window);
 }
 
 int main()
