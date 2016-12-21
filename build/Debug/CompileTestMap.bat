@@ -1,0 +1,1 @@
+MapCompiler ../res/maps/test.xml
