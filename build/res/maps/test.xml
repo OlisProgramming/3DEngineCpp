@@ -1,7 +1,7 @@
 <Map name="Test Map">
   
-  <Entity>
-    <pos>0 -1 5</pos>
+  <Entity pos="0 -1 5" scl="0.2">
+    <Mesh name="terrain02.obj" mat="default" />
   </Entity>
 
 </Map>
