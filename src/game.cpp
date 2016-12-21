@@ -80,7 +80,18 @@ void Game::LoadMap(const std::string& mapName, const Window& wnd) {
 				currentEntities.pop();
 			}
 		}
-		else if (command == "M")	// MeshRenderer component
+		else if (command == "M")	// Material
+		{
+			std::string name, diffuse, normal, displacement;
+			float specIntensity, specPower, dispScale, dispOffset;
+			if (!(iss >> name >> diffuse >> normal >> displacement >> specIntensity >> specPower >> dispScale >> dispOffset))
+			{
+				std::cout << "Invalid map line: " << line << std::endl;
+				return;
+			}
+			AddMaterial(new Material(name, Texture(diffuse), specIntensity, specPower, Texture(normal), Texture(displacement), dispScale, dispOffset));
+		}
+		else if (command == "MR")	// MeshRenderer component
 		{
 			std::string meshStr, materialStr;
 			if (!(iss >> meshStr >> materialStr))

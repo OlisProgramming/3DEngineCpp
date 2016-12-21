@@ -1,5 +1,12 @@
+M default defaultTexture.png default_normal.jpg default_disp.png 0.3 8.0 0.03 -0.5
+M bricks bricks.jpg bricks_normal.jpg bricks_disp.png 0.0 0.0 0.03 -0.5
+
 E 0.0 -1.0 5.0 1.0 0.0 0.0 0.0 32.0
-M terrain02.obj bricks
+MR terrain02.obj bricks
+e
+
+E 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0
+MR monkey3.obj default
 e
 
 E 0.0 0.0 0.0 1.0 0.0 0.0 -45.0 1.0

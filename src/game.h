@@ -17,6 +17,8 @@
 #ifndef MYGAME_H
 #define MYGAME_H
 
+#include <vector>
+
 #include "entity.h"
 #include "coreEngine.h"
 #include "profiling.h"
@@ -25,7 +27,10 @@ class Game
 {
 public:
 	Game() {}
-	virtual ~Game() {}
+	virtual ~Game() {
+		for (Material* mat : m_materials)
+			delete mat;
+	}
 
 	virtual void Init(const Window& window) {}
 	void ProcessInput(const Input& input, float delta);
@@ -38,6 +43,7 @@ public:
 	inline void SetEngine(CoreEngine* engine) { m_root.SetEngine(engine); }
 protected:
 	void AddToScene(Entity* child) { m_root.AddChild(child); }
+	void AddMaterial(Material* mat) { m_materials.push_back(mat); }
 	void LoadMap(const std::string& mapName, const Window& wnd);
 private:
 	Game(Game& game) {}
@@ -46,6 +52,7 @@ private:
 	ProfileTimer m_updateTimer;
 	ProfileTimer m_inputTimer;
 	Entity       m_root;
+	std::vector<Material*>	m_materials;
 };
 
 #endif

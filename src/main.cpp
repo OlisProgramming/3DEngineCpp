@@ -32,18 +32,14 @@ private:
 
 void TestGame::Init(const Window& window)
 {
-	Material bricks("bricks", Texture("bricks.jpg"), 0.0f, 0, Texture("bricks_normal.jpg"), Texture("bricks_disp.png"), 0.03f, -0.5f);
-	
 	LoadMap("test.temap", window);
 }
 
 int main()
 {
 	TestGame game;
-	Window window(1366, 768, "3D Game Engine");
+	Window window(1366, 700, "3D Game Engine");
 	RenderingEngine renderer(window);
-	
-	window.SetFullScreen(true);
 	
 	CoreEngine engine(60, &window, &renderer, &game);
 	engine.Start();
