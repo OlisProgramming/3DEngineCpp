@@ -8,7 +8,7 @@
 
 using namespace rapidxml;
 
-bool parseMesh(xml_node<> *node, std::ofstream* outfile) {
+bool parseMesh(xml_node<> *node, std::ofstream& outfile) {
 
 	std::string objName;
 	std::string matName;
@@ -53,11 +53,13 @@ bool parseMesh(xml_node<> *node, std::ofstream* outfile) {
 		return false;
 	}
 
+	outfile << "MR " << objName << " " << matName << "\n";
+
 	return true;
 }
 
 // Returns whether it was a successful parse.
-bool parseEntity(xml_node<> *node, std::ofstream* outfile) {
+bool parseEntity(xml_node<> *node, std::ofstream& outfile) {
 
 	// Convert to doubles and back again to avoid things that are not numbers creeping in, and remove trailing zeros!
 	double posX = 0;
@@ -107,7 +109,7 @@ bool parseEntity(xml_node<> *node, std::ofstream* outfile) {
 		}
 	}
 
-	*outfile << "E "
+	outfile << "E "
 		<< posX << " " << posY << " " << posZ << " "
 		<< rotX << " " << rotY << " " << rotZ << " " << rotAng << " "
 		<< scl << "\n";
@@ -130,7 +132,7 @@ bool parseEntity(xml_node<> *node, std::ofstream* outfile) {
 		}
 	}
 
-	*outfile << "e\n";
+	outfile << "e\n";
 	return true;
 }
 
@@ -153,7 +155,7 @@ void compile(char* fnamei, char* fnameo) {
 		std::string rootName = node->name();
 		if (rootName == "Entity")
 		{
-			if (!parseEntity(node, &outfile)) return;
+			if (!parseEntity(node, outfile)) return;
 		}
 		else
 		{
