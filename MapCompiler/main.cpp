@@ -20,7 +20,7 @@ void compile(char* fnamei, char* fnameo) {
 	xml_node<> *root_node = doc.first_node(0);
 	std::cout << "Compiling map " << root_node->first_attribute("name")->value() << "...\n";
 
-	std::string out;
+	std::ofstream outfile(fnameo);
 
 	for (xml_node<> *node = root_node->first_node(0); node; node = node->next_sibling())
 	{
@@ -57,16 +57,10 @@ void compile(char* fnamei, char* fnameo) {
 				}
 			}
 
-			out += "E "
-				+ std::to_string(posX) + " "
-				+ std::to_string(posY) + " "
-				+ std::to_string(posZ) + " "
-				+ std::to_string(rotX) + " "
-				+ std::to_string(rotY) + " "
-				+ std::to_string(rotZ) + " "
-				+ std::to_string(rotAng) + " "
-				+ std::to_string(scl)
-				+ "\ne\n";
+			outfile << "E "
+				<< posX << " " << posY << " " << posZ << " "
+				<< rotX << " " << rotY << " " << rotZ << " " << rotAng << " "
+				<< scl << "\ne\n";
 		}
 		else
 		{
@@ -75,8 +69,6 @@ void compile(char* fnamei, char* fnameo) {
 		}
 	}
 
-	std::ofstream outfile(fnameo);
-	outfile << out;
 	outfile.close();
 
 	std::cout << "Compiled successfully." << std::endl;
