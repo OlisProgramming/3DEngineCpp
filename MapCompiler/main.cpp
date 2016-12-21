@@ -8,6 +8,13 @@
 
 using namespace rapidxml;
 
+std::string ROOT_DIR = "";
+
+bool file_exists(const std::string& name) {
+	std::ifstream f(name.c_str());
+	return f.good();
+}
+
 bool parseMesh(xml_node<> *node, std::ofstream& outfile) {
 
 	std::string objName;
@@ -25,6 +32,10 @@ bool parseMesh(xml_node<> *node, std::ofstream& outfile) {
 			{
 				std::cerr << "\n\nInvalid contents of 'name' attribute!\n\tExpected one string,\n\tgot '" << value << "'.\n";
 				return false;
+			}
+			if (!file_exists(ROOT_DIR + "models/" + objName))
+			{
+				std::cout << "WARNING: File " << objName << " does not currently exist!\n";
 			}
 		}
 		else if (name == "mat")
@@ -136,9 +147,13 @@ bool parseEntity(xml_node<> *node, std::ofstream& outfile) {
 	return true;
 }
 
-void compile(char* fnamei, char* fnameo) {
-
+void compile(std::string fnamei, std::string fnameo) {
+	
 	std::ifstream infile(fnamei);
+	if (infile.bad())
+	{
+		return;
+	}
 	std::vector<char> buffer((std::istreambuf_iterator<char>(infile)), std::istreambuf_iterator<char>());
 	buffer.push_back('\0');
 
@@ -173,11 +188,12 @@ int main(int argc, char** argv)
 {
 	if (argc != 3) // argc should be 2 for correct execution
 	{
-		std::cerr << "Usage: " << argv[0] << " <filename>.xml <filename>.temap\n";
+		std::cerr << "Usage: " << argv[0] << " <directory containing res/ folder> <filename (no extension)\n";
 	}
 	else
 	{
-		compile(argv[1], argv[2]);
+		ROOT_DIR = std::string(argv[1]) + "/res/";
+		compile(std::string(argv[2]) + ".xml", std::string(argv[2]) + ".temap");
 	}
 
 	std::cout << "\n\nPress enter to exit...";

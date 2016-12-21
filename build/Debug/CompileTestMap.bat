@@ -1,1 +1,1 @@
-MapCompiler ../res/maps/test.xml ../res/maps/test.temap
+MapCompiler .. test
