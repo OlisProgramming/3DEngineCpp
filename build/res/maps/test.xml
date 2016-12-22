@@ -4,12 +4,20 @@
   <Material name="default" diffuse="defaultTexture.png" normal="default_normal.jpg" displacement="default_disp.png"
             specular="0.3"/>
     
-  <Entity pos="0 -1 5" scl="0.2">
+  <Entity pos="0 -1 5" scl="32">
     <Mesh name="terrain02.obj" mat="default" />
+  </Entity>
+
+  <Entity>
+    <Mesh name="monkey3.obj" mat="default" />
   </Entity>
 
   <Entity rot="1 0 0 -45">
     <DirectionalLight />
+  </Entity>
+
+  <Entity pos="0 2 0" rot="0 1 0 23">
+    <FreeCamera />
   </Entity>
 
 </Map>

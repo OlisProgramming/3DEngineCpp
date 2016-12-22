@@ -140,6 +140,54 @@ bool parseLightDirectional(xml_node<> *node, std::ofstream& outfile) {
 	return true;
 }
 
+bool parseFreeCamera(xml_node<> *node, std::ofstream& outfile) {
+
+	double fov = 70;
+	double near = 0.1;
+	double far = 1000;
+
+	for (xml_attribute<> *attr = node->first_attribute(); attr; attr = attr->next_attribute())
+	{
+		std::string name = attr->name();
+		std::string value = attr->value();
+		std::istringstream iss(value);
+
+		if (name == "fov")
+		{
+			if (!(iss >> fov))
+			{
+				std::cerr << "\n\nInvalid contents of 'fov' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "near")
+		{
+			if (!(iss >> near))
+			{
+				std::cerr << "\n\nInvalid contents of 'near' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "far")
+		{
+			if (!(iss >> far))
+			{
+				std::cerr << "\n\nInvalid contents of 'far' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else
+		{
+			std::cerr << "\n\nInvalid attribute of 'DirectionalLight' tag!\n\tExpected 'fov', 'near', 'far',\n\tgot '" << name << "'.\n";
+			return false;
+		}
+	}
+
+	outfile << "C " << fov << " " << near << " " << far << "\nFL\nFM\n";
+
+	return true;
+}
+
 // Returns whether it was a successful parse.
 bool parseEntity(xml_node<> *node, std::ofstream& outfile) {
 
@@ -151,7 +199,7 @@ bool parseEntity(xml_node<> *node, std::ofstream& outfile) {
 	double rotY = 0;
 	double rotZ = 0;
 	double rotAng = 0;
-	double scl = 0;
+	double scl = 1;
 
 	// Attributes
 	for (xml_attribute<> *attr = node->first_attribute(); attr; attr = attr->next_attribute())
@@ -210,6 +258,10 @@ bool parseEntity(xml_node<> *node, std::ofstream& outfile) {
 		else if (name == "DirectionalLight")
 		{
 			if (!parseLightDirectional(child, outfile)) return false;
+		}
+		else if (name == "FreeCamera")
+		{
+			if (!parseFreeCamera(child, outfile)) return false;
 		}
 		else
 		{

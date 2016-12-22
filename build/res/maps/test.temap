@@ -1,7 +1,15 @@
 M default defaultTexture.png default_normal.jpg default_disp.png 0.3 1 0 0
-E 0 -1 5 1 0 0 0 0.2
+E 0 -1 5 1 0 0 0 32
 MR terrain02.obj default
 e
-E 0 0 0 1 0 0 -45 0
+E 0 0 0 1 0 0 0 1
+MR monkey3.obj default
+e
+E 0 0 0 1 0 0 -45 1
 LD 1 1 1 0.4 10 80 1
+e
+E 0 2 0 0 1 0 23 1
+C 70 0.1 1000
+FL
+FM
 e

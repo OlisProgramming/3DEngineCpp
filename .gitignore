@@ -220,6 +220,7 @@ build/ALL_BUILD.vcxproj
 build/ALL_BUILD.vcxproj.filters
 build/CMakeCache.txt
 build/Debug/3DEngineCpp.exe
+build/Debug/MapCompiler.exe
 build/ZERO_CHECK.vcxproj
 build/ZERO_CHECK.vcxproj.filters
 build/cmake_install.cmake
