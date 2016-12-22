@@ -1,5 +1,9 @@
 <Map name="Test Map">
   
+  <!-- Materials must be created before the meshes they are used in! -->
+  <Material name="default" diffuse="defaultTexture.png" normal="default_normal.jpg" displacement="default_disp.png"
+            specular="0.3"/>
+    
   <Entity pos="0 -1 5" scl="0.2">
     <Mesh name="terrain02.obj" mat="default" />
   </Entity>

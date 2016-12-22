@@ -147,6 +147,110 @@ bool parseEntity(xml_node<> *node, std::ofstream& outfile) {
 	return true;
 }
 
+// Returns whether it was a successful parse.
+bool parseMaterial(xml_node<> *node, std::ofstream& outfile) {
+
+	std::string matName;
+	std::string diffuse = "defaultTexture.png";
+	std::string normal = "default_normal.jpg";
+	std::string displacement = "default_disp.png";
+	double specular = 0;
+	double specularPower = 1;
+	double displacementScale = 0;
+	double displacementOffset = 0;
+
+	// Attributes
+	for (xml_attribute<> *attr = node->first_attribute(); attr; attr = attr->next_attribute())
+	{
+		std::string name = attr->name();
+		std::string value = attr->value();
+		std::istringstream iss(value);
+
+		if (name == "name")
+		{
+			if (!(iss >> matName))
+			{
+				std::cerr << "\n\nInvalid contents of 'name' attribute!\n\tExpected one string value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "diffuse")
+		{
+			if (!(iss >> diffuse))
+			{
+				std::cerr << "\n\nInvalid contents of 'diffuse' attribute!\n\tExpected one string value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "normal")
+		{
+			if (!(iss >> normal))
+			{
+				std::cerr << "\n\nInvalid contents of 'normal' attribute!\n\tExpected one string value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "displacement")
+		{
+			if (!(iss >> displacement))
+			{
+				std::cerr << "\n\nInvalid contents of 'displacement' attribute!\n\tExpected one string value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "specular")
+		{
+			if (!(iss >> specular))
+			{
+				std::cerr << "\n\nInvalid contents of 'specular' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "specularPower")
+		{
+			if (!(iss >> specularPower))
+			{
+				std::cerr << "\n\nInvalid contents of 'specularPower' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "displacementScale")
+		{
+			if (!(iss >> displacementScale))
+			{
+				std::cerr << "\n\nInvalid contents of 'displacementScale' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "displacementOffset")
+		{
+			if (!(iss >> displacementOffset))
+			{
+				std::cerr << "\n\nInvalid contents of 'displacementOffset' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else
+		{
+			std::cerr << "\n\nInvalid attribute of 'Material' tag!\n\tExpected 'name', 'diffuse', 'normal', 'displacement', 'specular', 'specularPower', 'displacementScale', 'displacementOffset',\n\tgot '" << name << "'.\n";
+			return false;
+		}
+	}
+
+	if (matName == "")
+	{
+		std::cerr << "\n\nMaterial must have a 'name' attribute!\n";
+		return false;
+	}
+
+	outfile << "M " << matName << " "
+		<< diffuse << " " << normal << " " << displacement << " "
+		<< specular << " " << specularPower << " "
+		<< displacementScale << " " << displacementOffset << "\n";
+
+	return true;
+}
+
 void compile(std::string fnamei, std::string fnameo) {
 	
 	std::ifstream infile(fnamei);
@@ -172,6 +276,10 @@ void compile(std::string fnamei, std::string fnameo) {
 		{
 			if (!parseEntity(node, outfile)) return;
 		}
+		else if (rootName == "Material")
+		{
+			if (!parseMaterial(node, outfile)) return;
+		}
 		else
 		{
 			std::cerr << "\n\nInvalid node name!\n\tExpected 'Entity',\n\tgot '" << rootName << "'.\n";
@@ -188,12 +296,12 @@ int main(int argc, char** argv)
 {
 	if (argc != 3) // argc should be 2 for correct execution
 	{
-		std::cerr << "Usage: " << argv[0] << " <directory containing res/ folder> <filename (no extension)\n";
+		std::cerr << "Usage: " << argv[0] << " <directory containing res/ folder> <filename (no extension)>\n";
 	}
 	else
 	{
 		ROOT_DIR = std::string(argv[1]) + "/res/";
-		compile(std::string(argv[2]) + ".xml", std::string(argv[2]) + ".temap");
+		compile(ROOT_DIR + "maps/" +  std::string(argv[2]) + ".xml", ROOT_DIR + "maps/" + std::string(argv[2]) + ".temap");
 	}
 
 	std::cout << "\n\nPress enter to exit...";
