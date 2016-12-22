@@ -1,0 +1,30 @@
+# 3DEngineCpp MapCompiler Documentation
+
+The map compiler converts a `.xml` file into a file type called `.temap` which I designed to be as fast to load as possible,
+while maintaining some amount of readability. This is used so that any change in the map does not necessitate a recompile of the engine
+because maps are loaded at runtime.
+
+The compiled `.temap` should reside in your `/res/maps/` folder. To load a map into your game, simply call
+`LoadMap(const std::string& name, const Window& window)` in your `Game::Init` function. No other code is then required in `Init` unless
+you need non-map-specific code.
+
+## Running MapCompiler
+
+First, compile the file `3DEngineCpp/MapCompiler/main.cpp` with your choice of C++ compiler, and run it with two commandline parameters,
+the name of the directory containing `/res/` and the name (without a file extension) of your XML file.
+
+## XML syntax
+
+I assume if you are using this that you are already familiar with the XML file type, so I'll get to the MapCompiler-specific syntax.
+
+### Tags and Attributes
+
+In this segment I will abbreviate what the compiler expects when parsing eeach attribute, for example `1s` is one string value,
+and `3n` is three numeric values. `c` is short for compulsory, `o` is short for optional.
+
+* `Map` - the root tag of the XML file
+  - `name 1s c` - the name of the map. Does not do anything yet, apart from throw up a nice message during compilation.
+ 
+* `Material` - belongs in `Map` - specifies a material to use in rendering meshes later. Materials MUST be declared BEFORE the mesh(es) they are used in!
+  - `name 1s c` - the name of the material. This is the name used later in the file when specifying which material do use in a mesh.
+  - `diffuse 1s o` - the file name of the texture to use for diffuse shading on the material. Defaults to `defaultTexture.png`.
