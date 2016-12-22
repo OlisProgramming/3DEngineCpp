@@ -34,5 +34,5 @@ and `3n` is three numeric values. `c` is short for compulsory, `o` is short for 
   - `specularPower 1n o` - the specular power. Defaults to 1.
   - `displacementScale 1n o` - the scale of the displacement map. Defaults to 0.
   - `displacementOffset 1n o` - the offset on the displacement map. Defaults to 0.
-  
- * `Entity` - belongs in `Map` - creates an entity in the world. Valid subtags: all Entity Components (every tag defined below this point)
+
+* `Entity` - belongs in `Map` - creates an entity in the world. Valid subtags: all Entity Components (every tag defined below this point)
