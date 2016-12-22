@@ -8,4 +8,8 @@
     <Mesh name="terrain02.obj" mat="default" />
   </Entity>
 
+  <Entity rot="1 0 0 -45">
+    <DirectionalLight />
+  </Entity>
+
 </Map>

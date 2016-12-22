@@ -69,6 +69,77 @@ bool parseMesh(xml_node<> *node, std::ofstream& outfile) {
 	return true;
 }
 
+bool parseLightDirectional(xml_node<> *node, std::ofstream& outfile) {
+
+	double colR = 1;
+	double colG = 1;
+	double colB = 1;
+	double intensity = 0.4;
+	double shadowMapSize = 10;
+	double shadowArea = 80;
+	double shadowSoft = 1;
+
+	for (xml_attribute<> *attr = node->first_attribute(); attr; attr = attr->next_attribute())
+	{
+		std::string name = attr->name();
+		std::string value = attr->value();
+		std::istringstream iss(value);
+
+		// Ambiguity of spelling to keep American users happy.
+		if (name == "colour" || name == "color")
+		{
+			if (!(iss >> colR >> colG >> colB))
+			{
+				std::cerr << "\n\nInvalid contents of 'name' attribute!\n\tExpected three numeric values,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "intensity")
+		{
+			if (!(iss >> intensity))
+			{
+				std::cerr << "\n\nInvalid contents of 'intensity' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "shadowMapSize")
+		{
+			if (!(iss >> shadowMapSize))
+			{
+				std::cerr << "\n\nInvalid contents of 'shadowMapSize' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "shadowArea")
+		{
+			if (!(iss >> shadowArea))
+			{
+				std::cerr << "\n\nInvalid contents of 'shadowArea' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else if (name == "shadowSoft")
+		{
+			if (!(iss >> shadowSoft))
+			{
+				std::cerr << "\n\nInvalid contents of 'shadowSoft' attribute!\n\tExpected one numeric value,\n\tgot '" << value << "'.\n";
+				return false;
+			}
+		}
+		else
+		{
+			std::cerr << "\n\nInvalid attribute of 'Mesh' tag!\n\tExpected 'pos', 'rot', 'scl',\n\tgot '" << name << "'.\n";
+			return false;
+		}
+	}
+
+	outfile << "LD " << colR << " " << colG << " " << colB << " "
+		<< intensity << " "
+		<< shadowMapSize << " " << shadowArea << " " << shadowSoft << "\n";
+
+	return true;
+}
+
 // Returns whether it was a successful parse.
 bool parseEntity(xml_node<> *node, std::ofstream& outfile) {
 
@@ -99,7 +170,7 @@ bool parseEntity(xml_node<> *node, std::ofstream& outfile) {
 		}
 		else if (name == "rot")
 		{
-			if (!(iss >> rotX >> rotY >> rotZ))
+			if (!(iss >> rotX >> rotY >> rotZ >> rotAng))
 			{
 				std::cerr << "\n\nInvalid contents of 'rot' attribute!\n\tExpected four numeric values,\n\tgot '" << value << "'.\n";
 				return false;
@@ -135,6 +206,10 @@ bool parseEntity(xml_node<> *node, std::ofstream& outfile) {
 		if (name == "Mesh")
 		{
 			if (!parseMesh(child, outfile)) return false;
+		}
+		else if (name == "DirectionalLight")
+		{
+			if (!parseLightDirectional(child, outfile)) return false;
 		}
 		else
 		{
