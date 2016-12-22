@@ -90,7 +90,7 @@ bool parseLightDirectional(xml_node<> *node, std::ofstream& outfile) {
 		{
 			if (!(iss >> colR >> colG >> colB))
 			{
-				std::cerr << "\n\nInvalid contents of 'name' attribute!\n\tExpected three numeric values,\n\tgot '" << value << "'.\n";
+				std::cerr << "\n\nInvalid contents of 'colour'/'color' attribute!\n\tExpected three numeric values,\n\tgot '" << value << "'.\n";
 				return false;
 			}
 		}
@@ -128,7 +128,7 @@ bool parseLightDirectional(xml_node<> *node, std::ofstream& outfile) {
 		}
 		else
 		{
-			std::cerr << "\n\nInvalid attribute of 'Mesh' tag!\n\tExpected 'pos', 'rot', 'scl',\n\tgot '" << name << "'.\n";
+			std::cerr << "\n\nInvalid attribute of 'DirectionalLight' tag!\n\tExpected 'colour'/'color', 'intensity', 'shadowMapSize', 'shadowArea', 'shadowSoft',\n\tgot '" << name << "'.\n";
 			return false;
 		}
 	}
