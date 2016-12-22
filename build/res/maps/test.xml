@@ -1,7 +1,7 @@
 <Map name="Test Map">
   
   <!-- Materials must be created before the meshes they are used in! -->
-  <Material name="default" diffuse="defaultTexture.png" normal="default_normal.jpg" displacement="default_disp.png"
+  <Material name="default"
             specular="0.3"/>
     
   <Entity pos="0 -1 5" scl="32">
