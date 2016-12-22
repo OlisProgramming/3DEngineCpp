@@ -36,3 +36,13 @@ and `3n` is three numeric values. `c` is short for compulsory, `o` is short for 
   - `displacementOffset 1n o` - the offset on the displacement map. Defaults to 0.
 
 * `Entity` - belongs in `Map` - creates an entity in the world. Valid subtags: all Entity Components (every tag defined below this point)
+  - `pos 3n o` - the position of the entity. Defaults to the origin.
+  - `rot 4n o` - the rotation of the entity. Defaults to a rotation of zero degrees around the X axis
+  - `scl 1n o` - the scale of the entity. Defaults to 1.
+
+* `Mesh` - belongs in `Entity` - renders a mesh.
+  - `name 1s c` - the name of the Wavefront (OBJ) file containing the mesh.
+  - `mat 1s c` - the material to use when rendering the mesh. Defined above with the `Material` tag.
+
+* `DirectionalLight` - belongs in `Entity` - defines a directional light to use in the world (light radiating not from a point, but from everywhere pointing in the direction of the rotation of the containing entity
+  - `color/colour 3n o` - (can be spelt both ways for the benefit of US users)
