@@ -22,9 +22,17 @@ I assume if you are using this that you are already familiar with the XML file t
 In this segment I will abbreviate what the compiler expects when parsing eeach attribute, for example `1s` is one string value,
 and `3n` is three numeric values. `c` is short for compulsory, `o` is short for optional.
 
-* `Map` - the root tag of the XML file
+* `Map` - the root tag of the XML file. Valid subtags: `Material`, `Entity`.
   - `name 1s c` - the name of the map. Does not do anything yet, apart from throw up a nice message during compilation.
  
-* `Material` - belongs in `Map` - specifies a material to use in rendering meshes later. Materials MUST be declared BEFORE the mesh(es) they are used in!
+* `Material` - belongs in `Map` - defines a material to use in rendering meshes later. Materials MUST be defined BEFORE the mesh(es) they are used in! No valid subtags.
   - `name 1s c` - the name of the material. This is the name used later in the file when specifying which material do use in a mesh.
   - `diffuse 1s o` - the file name of the texture to use for diffuse shading on the material. Defaults to `defaultTexture.png`.
+  - `normal 1s o` - the file name of the texture to use for normal maps on the material. Defaults to `default_normal.jpg`.
+  - `displacement 1s o` - the file name of the texture to use for displacement maps on the material. Defaults to `default_disp.png`.
+  - `specular 1n o` - the specular intensity. Defaults to 0.
+  - `specularPower 1n o` - the specular power. Defaults to 1.
+  - `displacementScale 1n o` - the scale of the displacement map. Defaults to 0.
+  - `displacementOffset 1n o` - the offset on the displacement map. Defaults to 0.
+  
+ * `Entity` - belongs in `Map` - creates an entity in the world. Valid subtags: all Entity Components (every tag defined below this point)
