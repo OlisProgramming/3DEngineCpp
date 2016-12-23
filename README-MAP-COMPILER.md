@@ -78,6 +78,10 @@ The command's arguments are denoted by the smaller bullet points after the comma
 * `MR` - defines a `MeshRenderer` component.
   - `meshStr` - the name of the Wavefront (OBJ) file containing the mesh.
   - `materialStr` - the name of the material to use when rendering the mesh, as defined above in `M::name`.
+* `LD` - defines a `DirectionalLight` component.
+  - `colR colG colB` - the colour of the light.
+  - `intensity` - the intensity of the light.
+  - `shadowMapSize shadowArea shadowSoft` - parameters for the shadows cast by the light.
 * `C` - defines a camera.
   - `fov near far` - the Field Of View and the near and far Z planes.
 * `FL` - defines a `FreeLook` camera component.
