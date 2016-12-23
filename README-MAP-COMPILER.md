@@ -44,5 +44,14 @@ and `3n` is three numeric values. `c` is short for compulsory, `o` is short for 
   - `name 1s c` - the name of the Wavefront (OBJ) file containing the mesh.
   - `mat 1s c` - the material to use when rendering the mesh. Defined above with the `Material` tag.
 
-* `DirectionalLight` - belongs in `Entity` - defines a directional light to use in the world (light radiating not from a point, but from everywhere pointing in the direction of the rotation of the containing entity
+* `DirectionalLight` - belongs in `Entity` - creates a directional light to use in the world (light radiating not from a point, but from everywhere pointing in the direction of the rotation of the containing entity
   - `color/colour 3n o` - (can be spelt both ways for the benefit of US users)
+  - `intensity 1n o` - the intensity of the light. Defaults to 0.4.
+  - `shadowMapSize 1n o` - the size of the shadow map. Defaults to 10.
+  - `shadowArea 1n o` - the area of shadows. Defaults to 80.
+  - `shadowSoft 1n o` - the softness of the shadows' borders. Defaults to 1.
+
+* `FreeCamera` - belongs in `Entity` - creates a camera. This camera moves around the scene freely, controlled by the W, A, S and D keys, and the mouse.
+  - `fov 1n o` - the Field Of View of the camera. Defaults to 70.
+  - `near 1n o` - the near Z plane. Defaults to 0.1 world units.
+  - `far 1n o` - the far Z plane. Defaults to 1000 world units.
