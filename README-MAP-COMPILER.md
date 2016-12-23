@@ -82,3 +82,53 @@ The command's arguments are denoted by the smaller bullet points after the comma
   - `fov near far` - the Field Of View and the near and far Z planes.
 * `FL` - defines a `FreeLook` camera component.
 * `FM` - defines a `FreeMove` camera component.
+
+## Example
+
+The following is an example of a MapCompiler XML file.
+
+```xml
+<Map name="Test Map">
+  
+  <!-- Materials must be created before the meshes they are used in! -->
+  <Material name="default"
+            specular="0.3"/>
+    
+  <Entity pos="0 -1 5" scl="32">
+    <Mesh name="terrain02.obj" mat="default" />
+  </Entity>
+
+  <Entity>
+    <Mesh name="monkey3.obj" mat="default" />
+  </Entity>
+
+  <Entity rot="1 0 0 -45">
+    <DirectionalLight />
+  </Entity>
+
+  <Entity pos="0 2 0" rot="0 1 0 23">
+    <FreeCamera />
+  </Entity>
+
+</Map>
+```
+
+This XML file would compile to this TEMAP file.
+
+```
+M default defaultTexture.png default_normal.jpg default_disp.png 0.3 1 0 0
+E 0 -1 5 1 0 0 0 32
+MR terrain02.obj default
+e
+E 0 0 0 1 0 0 0 1
+MR monkey3.obj default
+e
+E 0 0 0 1 0 0 -45 1
+LD 1 1 1 0.4 10 80 1
+e
+E 0 2 0 0 1 0 23 1
+C 70 0.1 1000
+FL
+FM
+e
+```
