@@ -55,3 +55,80 @@ and `3n` is three numeric values. `c` is short for compulsory, `o` is short for 
   - `fov 1n o` - the Field Of View of the camera. Defaults to 70.
   - `near 1n o` - the near Z plane. Defaults to 0.1 world units.
   - `far 1n o` - the far Z plane. Defaults to 1000 world units.
+
+## TEMAP syntax
+
+You should not need to worry about TEMAP syntax unless you wish to help with the development of this project, so if you just want to use the MapCompiler you can skip over this section.
+
+Each line of a TEMAP file contains a command for the interpreter. It then passes a series of whitespace-separated arguments to the command if necessary. There will be no 'default' arguments, because it needs to be as fast as possible (and so every argument 'slot' must be filled). When you write a MapCompiler XML file, you are permitted to omit many arguments (the ones marked with `o` above). These are then automatically filled when the TEMAP file is written to.
+
+### List of commands
+
+The command's arguments are denoted by the smaller bullet points after the command. The arguments must be written in the exact order shown here, otherwise the map will either not look as desired, or will crash.
+
+* `E` - defines an entity. All commands after this point must be components of the entity.
+  - `posX posY posZ` - position of the entity.
+  - `rotX rotY rotZ rotAng` - rotation of the entity.
+  - `scl` - scale of the entity.
+* `e` - finalises an entity and adds it to the scene. This command must be run after an `E` command.
+* `M` - defines a material.
+  - `name` - name of the material.
+  - `diffuse normal displacement` - the textures used for diffuse, normal and displacement maps.
+  - `specIntensity specPower dispScale dispOffset` - parameters for the specular and displacement attributes of the material.
+* `MR` - defines a `MeshRenderer` component.
+  - `meshStr` - the name of the Wavefront (OBJ) file containing the mesh.
+  - `materialStr` - the name of the material to use when rendering the mesh, as defined above in `M::name`.
+* `C` - defines a camera.
+  - `fov near far` - the Field Of View and the near and far Z planes.
+* `FL` - defines a `FreeLook` camera component.
+* `FM` - defines a `FreeMove` camera component.
+
+## Example
+
+The following is an example of a MapCompiler XML file.
+
+```xml
+<Map name="Test Map">
+  
+  <!-- Materials must be created before the meshes they are used in! -->
+  <Material name="default"
+            specular="0.3"/>
+    
+  <Entity pos="0 -1 5" scl="32">
+    <Mesh name="terrain02.obj" mat="default" />
+  </Entity>
+
+  <Entity>
+    <Mesh name="monkey3.obj" mat="default" />
+  </Entity>
+
+  <Entity rot="1 0 0 -45">
+    <DirectionalLight />
+  </Entity>
+
+  <Entity pos="0 2 0" rot="0 1 0 23">
+    <FreeCamera />
+  </Entity>
+
+</Map>
+```
+
+This XML file would compile to this TEMAP file.
+
+```
+M default defaultTexture.png default_normal.jpg default_disp.png 0.3 1 0 0
+E 0 -1 5 1 0 0 0 32
+MR terrain02.obj default
+e
+E 0 0 0 1 0 0 0 1
+MR monkey3.obj default
+e
+E 0 0 0 1 0 0 -45 1
+LD 1 1 1 0.4 10 80 1
+e
+E 0 2 0 0 1 0 23 1
+C 70 0.1 1000
+FL
+FM
+e
+```
